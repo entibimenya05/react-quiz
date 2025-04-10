@@ -11,10 +11,13 @@ import Question from "./Question";
 
 const initialState = {
   questions: [],
-  //'loading','error','ready','active','finished'
+  //'loading','error','ready','active','finished' are all state variable
   status: "loading",
   //how to display each question using index
   index: 0,
+  //handling new answer, we need a new piece of state
+  answer: null,
+  points: 0,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -35,13 +38,27 @@ function reducer(state, action) {
         ...state,
         status: "active",
       };
+    //let's create an action in our reducer to update answer state
+    case "newAnswer":
+      //current question
+      const question = state.questions.at(state.index);
+      return {
+        ...state,
+        answer: action.payload,
+        //updating the points
+        points:
+          action.payload === question.correctOption
+            ? state.points + 1
+            : state.points,
+      };
+
     default:
       throw new Error("Action unknown");
   }
 }
 function App() {
   //destructure state:{qustion,status}
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -61,7 +78,13 @@ function App() {
         {status === "ready" && (
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
-        {status === "active" && <Question question={questions[index]} />}
+        {status === "active" && (
+          <Question
+            question={questions[index]}
+            dispatch={dispatch}
+            answer={answer}
+          />
+        )}
       </Main>
     </div>
   );
