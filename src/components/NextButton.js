@@ -1,17 +1,27 @@
 import React from "react";
 
-function NextButton({ dispatch, answer }) {
+function NextButton({ dispatch, answer, index, numQuestions }) {
   if (answer === null) return;
-  return (
-    <div>
+
+  if (index < numQuestions - 1)
+    return (
       <button
         className="btn btn-ui"
         onClick={() => dispatch({ type: "nextQuestion" })}
       >
         Next
       </button>
-    </div>
-  );
+    );
+  //another button
+  if (index === numQuestions - 1)
+    return (
+      <button
+        className="btn btn-ui"
+        onClick={() => dispatch({ type: "finish" })}
+      >
+        Finish
+      </button>
+    );
 }
 
 export default NextButton;
