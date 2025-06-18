@@ -12,7 +12,9 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
-const SECS_PER_QUESTION = 30;
+import { useQuiz } from "../contexts/QuizContext";
+{
+  /*const SECS_PER_QUESTION = 30;
 const initialState = {
   questions: [],
   //'loading','error','ready','active','finished' are all state variable
@@ -26,8 +28,10 @@ const initialState = {
   highscore: 0,
   //timer state
   secondsRemaining: null,
-};
-function reducer(state, action) {
+};*/
+}
+{
+  /*function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
       return {
@@ -97,10 +101,12 @@ function reducer(state, action) {
     default:
       throw new Error("Action unknown");
   }
+}*/
 }
 function App() {
   //destructure state:{qustion,status}
-  const [
+  {
+    /* const [
     { questions, status, index, answer, points, highscore, secondsRemaining },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -108,13 +114,18 @@ function App() {
   const maxPossiblePoints = questions.reduce(
     (prev, cur) => prev + cur.points,
     0
-  );
-  useEffect(function () {
+  );*/
+  }
+
+  {
+    /* useEffect(function () {
     fetch("http://localhost:8000/questions")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReceived", payload: data }))
       .catch((err) => dispatch({ type: "dataFailed" }));
-  }, []);
+  }, []);*/
+  }
+  const { status } = useQuiz();
   return (
     <div className="App">
       <Header />
@@ -122,40 +133,44 @@ function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && (
-          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+          <StartScreen
+          // numQuestions={numQuestions} dispatch={dispatch}
+          />
         )}
         {status === "active" && (
           <>
             <Progress
-              index={index}
-              numQuestions={numQuestions}
-              points={points}
-              maxPossiblePoints={maxPossiblePoints}
-              answer={answer}
+            //index={index}
+            // numQuestions={numQuestions}
+            // points={points}
+            // maxPossiblePoints={maxPossiblePoints}
+            //  answer={answer}
             />
             <Question
-              question={questions[index]}
-              dispatch={dispatch}
-              answer={answer}
+            //question={questions[index]}
+            // dispatch={dispatch}
+            // answer={answer}
             />
             <Footer>
-              <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
+              <Timer
+              //. dispatch={dispatch} secondsRemaining={secondsRemaining}
+              />
               {/* Next button only if there is an answer*/}
               <NextButton
-                dispatch={dispatch}
-                answer={answer}
-                index={index}
-                numQuestions={numQuestions}
+              // dispatch={dispatch}
+              // answer={answer}
+              // index={index}
+              //  numQuestions={numQuestions}
               />
             </Footer>
           </>
         )}
         {status === "finished" && (
           <FinishScreen
-            points={points}
-            maxPossiblePoints={maxPossiblePoints}
-            highscore={highscore}
-            dispatch={dispatch}
+          //  points={points}
+          //  maxPossiblePoints={maxPossiblePoints}
+          // highscore={highscore}
+          //  dispatch={dispatch}
           />
         )}
       </Main>

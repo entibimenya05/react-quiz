@@ -1,5 +1,8 @@
 import React from "react";
-function Progress({ index, numQuestions, points, maxPossiblePoints, answer }) {
+import { useQuiz } from "../contexts/QuizContext";
+function Progress() {
+  //{ index, numQuestions, points, maxPossiblePoints, answer }
+  const { index, numQuestions, points, maxPossiblePoints, answer } = useQuiz();
   return (
     //strong makes it bold
     <header className="progress">
